@@ -1,4 +1,6 @@
-﻿namespace Serkomut.MailSender
+﻿using System.Net.Mail;
+
+namespace Serkomut.MailSender
 {
     public interface IEmailSender
     {
@@ -7,6 +9,7 @@
         IEmailSender FromTo(Message message);
         IEmailSender Subject(string subject);
         IEmailSender Body(string message);
+        IEmailSender Attachment(Attachment attachment);
         string Send();
     }
 }

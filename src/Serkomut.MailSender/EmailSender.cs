@@ -18,6 +18,12 @@ namespace Serkomut.MailSender
             return this;
         }
 
+        public IEmailSender Attachment(Attachment attachment)
+        {
+            this.attachment = attachment;
+            return this;
+        }
+
         public IEmailSender FromTo(Message message)
         {
             this.message = message;
@@ -47,6 +53,7 @@ namespace Serkomut.MailSender
                 mail.Subject = subject;
                 mail.Body = body;
                 mail.IsBodyHtml = true;
+                mail.Attachments.Add(attachment);
 
                 var smtp = new SmtpClient(host, 587)
                 {
@@ -70,5 +77,6 @@ namespace Serkomut.MailSender
         string password;
         string subject;
         string body;
+        Attachment attachment;
     }
 }
