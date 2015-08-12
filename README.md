@@ -14,5 +14,6 @@ var result = new EmailSender()
             })
             .Subject("Subject")
             .Body("Content text...")
+			.Attachment(new Attachment(new MemoryStream(), "filename.***", "mediaType"))
             .Send();
 ```
