@@ -18,6 +18,14 @@ namespace Serkomut.MailSender
             return this;
         }
 
+        public IEmailSender RazorTemplate<T>(string template, T model, bool isHtml = true)
+        {
+            razorTemplate = new RazorTemplate();
+            var parse = razorTemplate.Parse(template, model, isHtml);
+            this.body = parse;
+            return this;
+        }
+
         public IEmailSender Attachment(Attachment attachment)
         {
             this.attachment = attachment;
@@ -53,7 +61,11 @@ namespace Serkomut.MailSender
                 mail.Subject = subject;
                 mail.Body = body;
                 mail.IsBodyHtml = true;
-                mail.Attachments.Add(attachment);
+                
+                if (attachment != null)
+                {
+                    mail.Attachments.Add(attachment);
+                }
 
                 var smtp = new SmtpClient(host, 587)
                 {
@@ -78,5 +90,6 @@ namespace Serkomut.MailSender
         string subject;
         string body;
         Attachment attachment;
+        IRazorTemplate razorTemplate;
     }
 }
